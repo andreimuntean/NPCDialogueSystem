@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" standalone="yes"?>
+<npcs>
+  <npc id="1">
+    <name text="John"/>
+    <greeting text="Greetings, traveler."/>
+    <options>
+      <option id="1" category="1" leadsTo="2;3"
+              text="What is your name?"
+              reply="My name is John. What is yours?"/>
+      <option id="2" category="1" visible="false"
+              text="My name is Undefined."
+              reply="That is a peculiar name."/>
+      <option id="3" category="1" visible="false"
+              text="I'm the one asking questions here."
+              reply="Oookay"/>
+      <option id="4" category="1"
+              text="Where are you from?"
+              reply="I am from RPGVille."/>
+      <option id="5" category="0" leadsTo="6;7;8;9"
+              text="Do you have any quests?"
+              reply="I most certainly do! Would you prefer to kill a witch or hunt a dragon?"/>
+      <option id="6" category="0" visible="false"
+              text="I'd like to kill a witch."
+              reply="Wonderful! [...]"/>
+      <option id="7" category="0" visible="false"
+              text="I'd like to hunt a dragon."
+              reply="Wonderful! [...]"/>
+      <option id="8" category="0" visible="false"
+              text="I was actually looking for something more zen."
+              reply="Wonderful! [...]"/>
+      <option id="9" category="0" visible="false"
+              text="On second thought, never mind."
+              reply="Very well."/>
+      <option id="10" category="1"
+              text="Have we met before?"
+              reply="Probably not."/>
+      <option id="11" category="1"
+              text="You are wounded! What happened?"
+              reply="A supernova exploded."/>
+      <option id="12" category="1" leadsTo="13;14"
+              text="Why do you work here?"
+              reply="Because I have to."/>
+      <option id="13" category="1" visible="false"
+              text="Why don't you quit?"
+              reply="The people, man. They depend on me."/>
+      <option id="14" category="1" visible="false"
+              text="You ... have to?"
+              reply="Yep. People depend on me."/>
+      <option id="15" category="0"
+              text="I was sent to capture you."
+              reply="You will never get me alive."/>
+    </options>
+  </npc>
+</npcs>
