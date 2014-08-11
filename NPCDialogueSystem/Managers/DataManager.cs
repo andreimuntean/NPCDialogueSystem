@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 
@@ -8,6 +9,7 @@ namespace NPCDialogueSystem
     {
         static public string RootDirectory { get { return @"Resources\"; } }
         static public string Path { get { return RootDirectory + "NPCs.xml"; } }
+        static public bool CanLoad { get { return File.Exists(Path); } }
 
         static private Dialogue searchById(int id)
         {
@@ -69,6 +71,7 @@ namespace NPCDialogueSystem
                                         subsequentIdList.Add(reader["leadsTo"].Split(';'));
                                     }
                                     else subsequentIdList.Add(new string[] { });
+
                                     dialogueOptions.Add(reader["id"], dialogueOption);
                                 }
                             }
@@ -89,7 +92,6 @@ namespace NPCDialogueSystem
                             }
 
                             dialogue.Initialize();
-                            
                             break;
                     }
                 }
@@ -100,12 +102,24 @@ namespace NPCDialogueSystem
 
         static public T Load<T>(int id) where T : Dialogue
         {
-            if (typeof(T) == typeof(Dialogue))
+            if (CanLoad)
             {
-                var result = searchById(id);
-                return result as T;
+                if (typeof(T) == typeof(Dialogue))
+                {
+                    var result = searchById(id);
+                    return result as T;
+                }
+                else
+                {
+                    ExceptionManager.Log("Could not load object of type " + typeof(T).Name + ".");
+                    return null;
+                }
             }
-            else return null;
+            else
+            {
+                ExceptionManager.Log("Cannot load object because the specified path is invalid.");
+                return null;
+            }
         }
     }
 }

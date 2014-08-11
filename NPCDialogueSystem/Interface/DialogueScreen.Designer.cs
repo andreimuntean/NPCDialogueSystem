@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.DialoguePanel = new System.Windows.Forms.Panel();
+            this.OptionsPanel = new System.Windows.Forms.Panel();
             this.CategoryPanel = new System.Windows.Forms.Panel();
             this.TradeButton = new System.Windows.Forms.Button();
             this.LocationButton = new System.Windows.Forms.Button();
@@ -39,7 +40,6 @@
             this.SearchIcon = new System.Windows.Forms.PictureBox();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.LogPanel = new System.Windows.Forms.Panel();
-            this.OptionsPanel = new System.Windows.Forms.Panel();
             this.LogTextBox = new System.Windows.Forms.TextBox();
             this.DialoguePanel.SuspendLayout();
             this.CategoryPanel.SuspendLayout();
@@ -58,6 +58,15 @@
             this.DialoguePanel.Name = "DialoguePanel";
             this.DialoguePanel.Size = new System.Drawing.Size(690, 200);
             this.DialoguePanel.TabIndex = 0;
+            // 
+            // OptionsPanel
+            // 
+            this.OptionsPanel.AutoScroll = true;
+            this.OptionsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.OptionsPanel.Location = new System.Drawing.Point(3, 48);
+            this.OptionsPanel.Name = "OptionsPanel";
+            this.OptionsPanel.Size = new System.Drawing.Size(684, 110);
+            this.OptionsPanel.TabIndex = 0;
             // 
             // CategoryPanel
             // 
@@ -197,15 +206,6 @@
             this.LogPanel.Size = new System.Drawing.Size(690, 191);
             this.LogPanel.TabIndex = 1;
             // 
-            // OptionsPanel
-            // 
-            this.OptionsPanel.AutoScroll = true;
-            this.OptionsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.OptionsPanel.Location = new System.Drawing.Point(3, 48);
-            this.OptionsPanel.Name = "OptionsPanel";
-            this.OptionsPanel.Size = new System.Drawing.Size(684, 110);
-            this.OptionsPanel.TabIndex = 0;
-            // 
             // LogTextBox
             // 
             this.LogTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -214,6 +214,7 @@
             this.LogTextBox.Location = new System.Drawing.Point(13, 8);
             this.LogTextBox.Multiline = true;
             this.LogTextBox.Name = "LogTextBox";
+            this.LogTextBox.ReadOnly = true;
             this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.LogTextBox.Size = new System.Drawing.Size(664, 175);
             this.LogTextBox.TabIndex = 0;

@@ -9,23 +9,53 @@ namespace NPCDialogueSystem
     {
         public Dialogue Dialogue { get; set; }
         public List<DialogueButton> DialogueButtons { get; set; }
-        public bool IsFiltering { get; set; }
-        public Category Filter { get; set; }
+
+        private bool isFiltering;
+        public bool IsFiltering
+        {
+            get { return isFiltering; }
+            set
+            {
+                isFiltering = value;
+                UpdateCategories();
+            }
+        }
+
+        private Category filter;
+        public Category Filter
+        {
+            get { return filter; }
+            set
+            {
+                filter = value;
+                UpdateCategories();
+            }
+        }
 
         public MainForm()
         {
             InitializeComponent();
-            Initialize();
+
+            if (DataManager.CanLoad)
+            {
+                Initialize();
+            }
+            else
+            {
+                ExceptionManager.Log("Could not find " + DataManager.Path + ".", true);
+                Environment.Exit(0);
+            }
         }
 
         public void Initialize()
         {
+            IsFiltering = false;
             Dialogue = DataManager.Load<Dialogue>(1);
             Log(Dialogue.Name, Dialogue.Greeting);
-            RefreshOptions();
+            UpdateOptions();
         }
 
-        public void RefreshOptions()
+        public void UpdateOptions()
         {
             OptionsPanel.Controls.Clear();
 
@@ -46,10 +76,35 @@ namespace NPCDialogueSystem
                 OptionsPanel.Controls.Add(DialogueButtons[i]);
             }
         }
+        
+        public void UpdateCategories()
+        {
+            var defaultColor = Color.FromArgb(201, 174, 124);
+            var selectionColor = Color.FromArgb(255, 0, 0);
+            
+            GeneralButton.FlatAppearance.BorderColor = defaultColor;
+            QuestButton.FlatAppearance.BorderColor = defaultColor;
+            PersonalButton.FlatAppearance.BorderColor = defaultColor;
+            LocationButton.FlatAppearance.BorderColor = defaultColor;
+            TradeButton.FlatAppearance.BorderColor = defaultColor;
+
+            if (IsFiltering)
+            {
+                switch (Filter)
+                {
+                    case Category.Quest: QuestButton.FlatAppearance.BorderColor = selectionColor; break;
+                    case Category.Personal: PersonalButton.FlatAppearance.BorderColor = selectionColor; break;
+                    case Category.Location: LocationButton.FlatAppearance.BorderColor = selectionColor; break;
+                    case Category.Trade: TradeButton.FlatAppearance.BorderColor = selectionColor; break;
+                }
+            }
+            else GeneralButton.FlatAppearance.BorderColor = selectionColor;
+        }
 
         public void Log(string name, string message)
         {
-            LogTextBox.Text += name + ": " + message + Environment.NewLine;
+            var date = DateTime.UtcNow.ToLongTimeString();
+            LogTextBox.AppendText('[' + date + "] " + name + ": " + message + Environment.NewLine);
         }
 
         #region Events
@@ -60,14 +115,14 @@ namespace NPCDialogueSystem
             Log("You", dialogueOption.Text);
             Log(Dialogue.Name, dialogueOption.Reply);
             Dialogue.Select(dialogueOption);
-            RefreshOptions();
+            UpdateOptions();
         }
 
         private void GeneralButton_Click(object sender, EventArgs e)
         {
             IsFiltering = false;
             OptionsPanel.Select();
-            RefreshOptions();
+            UpdateOptions();
         }
 
         private void QuestButton_Click(object sender, EventArgs e)
@@ -75,7 +130,7 @@ namespace NPCDialogueSystem
             IsFiltering = true;
             Filter = Category.Quest;
             OptionsPanel.Select();
-            RefreshOptions();
+            UpdateOptions();
         }
 
         private void PersonalButton_Click(object sender, EventArgs e)
@@ -83,7 +138,7 @@ namespace NPCDialogueSystem
             IsFiltering = true;
             Filter = Category.Personal;
             OptionsPanel.Select();
-            RefreshOptions();
+            UpdateOptions();
         }
 
         private void LocationButton_Click(object sender, EventArgs e)
@@ -91,7 +146,7 @@ namespace NPCDialogueSystem
             IsFiltering = true;
             Filter = Category.Location;
             OptionsPanel.Select();
-            RefreshOptions();
+            UpdateOptions();
         }
 
         private void TradeButton_Click(object sender, EventArgs e)
@@ -99,12 +154,12 @@ namespace NPCDialogueSystem
             IsFiltering = true;
             Filter = Category.Trade;
             OptionsPanel.Select();
-            RefreshOptions();
+            UpdateOptions();
         }
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e)
         {
-            RefreshOptions();
+            UpdateOptions();
         }
         #endregion
     }
